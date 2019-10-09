@@ -1,0 +1,84 @@
+
+body {
+  background-color: whitesmoke !important;
+}
+
+.App {
+  background-color: white;
+  margin: auto !important;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #efefef;
+  padding: 30px;
+  box-shadow: 6px 29px 51px 6px rgba(0,0,0,0.4);
+  /* box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.15),
+    0 10px 0 -5px #eee,
+    0 10px 1px -4px rgba(0,0,0,0.15),
+    0 20px 0 -10px #eee,
+    0 20px 1px -9px rgba(0,0,0,0.15); */
+
+}
+
+.toDoTitle {
+  font-size: 30px;
+}
+
+
+input {
+  font-weight: 100;
+  font-size: 20px !important;
+  /* font-style: italic; */
+}
+.toDoItem {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 30px 20px 0;
+  /* width: 70%; */
+  border-bottom: 1px solid #cecece;
+  font-family: Roboto, sans-serif;
+  font-weight: 100;
+  font-size: 15px;
+  color: #333333;
+}
+
+.check {
+  margin-right: 10px !important;
+}
+
+
+.expiry {
+  display: flex;
+  margin-left: 10px;
+}
+
+.fixMenu {
+  width: inherit;
+  position: fixed;
+  top: 0;
+  background:rgba(201, 24, 24, 0.4);
+}
+
+.tabs {
+  display: flex;
+  text-align: center;
+}
+
+input {
+  border: none;
+}
+
+#timeToolTip:hover {
+  background-color: rgba(202, 87, 34, 0.116)
+}
+
+.add {
+  position: relative;
+  bottom: 0 !important;
+  right: 0;
+  font-weight: 100 !important;
+  font-size: 30px !important;
+}
