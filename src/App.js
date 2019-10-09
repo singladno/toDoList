@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import ToDoItem from './ToDoItem'
 import moment from 'moment'
-import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader, Form } from 'reactstrap'
 
 export default function App() {
   const [isAddOpen, setAddOpen] = useState(false)
+  const [isValid, setIsValid] = useState("invalid")
   const [title, setTitle] = useState();
   const [date, setDate] = useState();
   const [works, setWorks] = useState(JSON.parse(localStorage.getItem('works')) || []);
@@ -16,10 +17,12 @@ export default function App() {
       const arr = []
       arr.push(date)
       localStorage.setItem('dates', JSON.stringify(arr))
+      setDates(arr)
     } else {
       const arr = JSON.parse(localStorage.getItem('dates'));
       arr.push(date)
       localStorage.setItem('dates', JSON.stringify(arr))
+      setDates(arr)
     }
   }
 
@@ -28,18 +31,20 @@ export default function App() {
       const arr = [];
       arr.push(title)
       localStorage.setItem('works', JSON.stringify(arr))
+      setWorks(arr)
     } else {
       const arr = JSON.parse(localStorage.getItem('works'));
       // console.log(arr);
       arr.push(title)
       localStorage.setItem('works', JSON.stringify(arr))
+      setWorks(arr)
     }
   }
 
   function add() {
     addWork();
     addDate();
-    document.location.reload()
+    // document.location.reload()
   }
 
   function handleDelete(key) {
@@ -49,7 +54,8 @@ export default function App() {
     arr = JSON.parse(localStorage.getItem('dates'))
     arr.splice(key, 1);
     localStorage.setItem('dates', JSON.stringify(arr))
-    document.location.reload();
+    setWorks(arr);
+    // document.location.reload();
     // console.log(arr);
   }
 
@@ -84,18 +90,21 @@ export default function App() {
         </div>
         
         
+        <Form>
 
         <Modal isOpen={isAddOpen} toggle={() => setAddOpen(!isAddOpen)}>
             <ModalHeader toggle={() => setAddOpen(!isAddOpen)}>Add new task</ModalHeader>
             <ModalBody>
-              <Input type="text" placeholder="Task title here" onChange={handleTitleChange}/>
-              <Input type="date" onChange={handleDateChange}/>
+              <Input type="text" required placeholder="Task title here" onChange={handleTitleChange}/>
+              <Input type="date" required onChange={handleDateChange}/>
             </ModalBody>
             <ModalFooter>
               <Button color="primary" onClick={() => {setAddOpen(!isAddOpen); add()}}>ok</Button>
               <Button color="secondary" onClick={() => setAddOpen(!isAddOpen)}>Cancel</Button>
             </ModalFooter>
           </Modal>
+
+        </Form>
           <div className="container text-right">
             <Button className="add" onClick={() => setAddOpen(!isAddOpen)} outline color="primary" style={{border: "none"}}>+</Button>
           </div>
