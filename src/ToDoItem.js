@@ -11,6 +11,7 @@ export default function ToDoItem(props) {
 	function 	handleCheck() {
 		setCheck(!check)
 	}
+	const [itemType, setItemType] = useState(props.itemType)
 	const [isOpen, setOpen] = useState(false)
 	const [isCheckOpen, setCheckOpen] = useState(false);
 	const [title, setTitle] = useState(props.item)
@@ -36,6 +37,14 @@ export default function ToDoItem(props) {
 		setTitle(event.target.value)
 		arr[props.dataKey] = event.target.value;
 		localStorage.setItem('works', JSON.stringify(arr))
+	}
+
+	function	handleTypeChange(event) {
+		var arr = []
+		arr = JSON.parse(localStorage.getItem('types'))
+		arr[props.dataKey] = event.target.value
+		localStorage.setItem('types', JSON.stringify(arr))
+		setItemType(event.target.value)
 	}
 
 	return(
@@ -86,6 +95,16 @@ export default function ToDoItem(props) {
 						</Tooltip>
 					</Button>
 				</div>
+			</div>
+
+			<div className="itemType">
+				<input
+				className="itemType"
+				type="text"
+				value={itemType}
+				onChange={handleTypeChange}
+				>
+				</input>
 			</div>
 
 		</div>

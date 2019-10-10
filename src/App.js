@@ -7,9 +7,11 @@ export default function App() {
   const [isAddOpen, setAddOpen] = useState(false)
   const [isValid, setIsValid] = useState("invalid")
   const [title, setTitle] = useState();
+  const [itemType, setItemType] = useState();
   const [date, setDate] = useState();
   const [works, setWorks] = useState(JSON.parse(localStorage.getItem('works')) || []);
   const [dates, setDates] = useState(JSON.parse(localStorage.getItem('dates')));
+  const [types, setTypes] = useState(JSON.parse(localStorage.getItem('types')));
   // console.log(works);
 
   function addDate() {
@@ -23,6 +25,20 @@ export default function App() {
       arr.push(date)
       localStorage.setItem('dates', JSON.stringify(arr))
       setDates(arr)
+    }
+  }
+
+  function addType() {
+    if (localStorage.getItem('types') === null) {
+      const arr = []
+      arr.push(itemType)
+      localStorage.setItem('types', JSON.stringify(arr))
+      setTypes(arr)
+    } else {
+      const arr = JSON.parse(localStorage.getItem('types'));
+      arr.push(itemType)
+      localStorage.setItem('types', JSON.stringify(arr))
+      setTypes(arr)
     }
   }
 
@@ -44,6 +60,7 @@ export default function App() {
   function add() {
     addWork();
     addDate();
+    addType();
     // document.location.reload()
   }
 
@@ -51,9 +68,15 @@ export default function App() {
     var arr = JSON.parse(localStorage.getItem('works'))
     arr.splice(key, 1);
     localStorage.setItem('works', JSON.stringify(arr))
+
     arr = JSON.parse(localStorage.getItem('dates'))
     arr.splice(key, 1);
     localStorage.setItem('dates', JSON.stringify(arr))
+
+    arr = JSON.parse(localStorage.getItem('types'))
+    arr.splice(key, 1);
+    localStorage.setItem('types', JSON.stringify(arr))
+
     setWorks(arr);
     // document.location.reload();
     // console.log(arr);
@@ -61,6 +84,10 @@ export default function App() {
 
   function handleTitleChange(event) {
     setTitle(event.target.value);
+  }
+
+  function handleTypeChange(event) {
+    setItemType(event.target.value);
   }
 
   function handleDateChange(event) {
@@ -84,7 +111,7 @@ export default function App() {
         <div className="works">
         {works.map((work, index) => {
           return (
-            < ToDoItem item={work} key={index} dataKey={index} date={dates[index]} handleDelete={handleDelete}/>
+            < ToDoItem item={work} itemType={types[index]} key={index} dataKey={index} date={dates[index]} handleDelete={handleDelete}/>
           )
         })}
         </div>
@@ -95,7 +122,8 @@ export default function App() {
         <Modal isOpen={isAddOpen} toggle={() => setAddOpen(!isAddOpen)}>
             <ModalHeader toggle={() => setAddOpen(!isAddOpen)}>Add new task</ModalHeader>
             <ModalBody>
-              <Input type="text" required placeholder="Task title here" onChange={handleTitleChange}/>
+              <Input type="text" required placeholder="Task title" onChange={handleTitleChange}/>
+              <Input type="text" required placeholder="Task type" onChange={handleTypeChange}/>
               <Input type="date" required onChange={handleDateChange}/>
             </ModalBody>
             <ModalFooter>
