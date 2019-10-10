@@ -68,16 +68,17 @@ export default function App() {
     var arr = JSON.parse(localStorage.getItem('works'))
     arr.splice(key, 1);
     localStorage.setItem('works', JSON.stringify(arr))
-
+    setWorks(arr);
+    
     arr = JSON.parse(localStorage.getItem('dates'))
     arr.splice(key, 1);
     localStorage.setItem('dates', JSON.stringify(arr))
-
+    setDates(arr)
+    
     arr = JSON.parse(localStorage.getItem('types'))
     arr.splice(key, 1);
     localStorage.setItem('types', JSON.stringify(arr))
-
-    setWorks(arr);
+    setTypes(arr)
     // document.location.reload();
     // console.log(arr);
   }
