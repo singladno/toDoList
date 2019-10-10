@@ -105,6 +105,14 @@ input {
   font-size: 30px !important;
 }
 
+.isSoon {
+  background-color: yellow
+}
+
+.isExpired {
+  background-color: rgba(255, 0, 0, 0.322)
+}
+
 /* .itemType {
   background-color: #eed33b !important  
 } */

@@ -9,17 +9,22 @@ export default function ToDoItem(props) {
 	const [isSoon, setIsSoon] = useState(false);
 	const [isExpired, setIsExpired] = useState(false);
 	const [check, setCheck] = useState(false);
-	
+	const [todoStyle, setTodoStyle] = useState('');
+
+
 	useEffect(() => {
 		if (moment().isAfter(props.date, 'day')) {
-			setIsExpired(true)
+			setIsExpired(true);
+			setTodoStyle('isExpired');
 		}
-		if (moment().add(1, 'days').isSame(props.date, 'day')) {
-			setIsSoon(true)
+		if (moment().add(1, 'days').isSame(props.date, 'day') && !isExpired) {
+			setIsSoon(true);
+			setTodoStyle('isSoon');
 		}
 		console.log(`${props.item} isExpired: ${isExpired}`)
 		console.log(`${props.item} isSoon: ${isSoon}`)
-	})
+		// props.setWorks();
+	});
 
 	function 	handleCheck() {
 		setCheck(!check)
@@ -44,7 +49,7 @@ export default function ToDoItem(props) {
 
 	function handleDateChange(event) {
 		var now = moment(event.target.value, "YYYY-MM-DD").format("D MMM YYYY")
-		var arr = JSON.parse(localStorage.getItem('works'))
+		// var arr = JSON.parse(localStorage.getItem('works'))
 		setDate(now)
 		// window.location.reload()
 		// console.log(date)
@@ -76,7 +81,7 @@ export default function ToDoItem(props) {
 	}
 
 	return(
-		<div className="toDoItem">
+		<div className={`toDoItem ${todoStyle}`}>
 			<Tooltip placement="top" isOpen={isCheckOpen} toggle={() => setCheckOpen(!isCheckOpen)} href="#" target="checkToolTip">
 				Done
 			</Tooltip>
