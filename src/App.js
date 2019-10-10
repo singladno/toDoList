@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ToDoItem from './ToDoItem'
 import moment from 'moment'
 import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader, Form } from 'reactstrap'
+import { tsPropertySignature } from '@babel/types'
 
 export default function App() {
   const [isAddOpen, setAddOpen] = useState(false)
@@ -10,77 +11,38 @@ export default function App() {
   const [itemType, setItemType] = useState();
   const [date, setDate] = useState();
   const [works, setWorks] = useState(JSON.parse(localStorage.getItem('works')) || []);
-  const [dates, setDates] = useState(JSON.parse(localStorage.getItem('dates')));
-  const [types, setTypes] = useState(JSON.parse(localStorage.getItem('types')));
   // console.log(works);
 
-  function addDate() {
-    if (localStorage.getItem('dates') === null) {
-      const arr = []
-      arr.push(date)
-      localStorage.setItem('dates', JSON.stringify(arr))
-      setDates(arr)
+  function addItem() {
+    var arr = JSON.parse(localStorage.getItem('works'))
+    if (arr === null) {
+    arr = [
+      {
+        id: 0,
+        date: date,
+        type: itemType,
+        title: title
+      },
+    ]  
+    localStorage.setItem('works', JSON.stringify(arr))
     } else {
-      const arr = JSON.parse(localStorage.getItem('dates'));
-      arr.push(date)
-      localStorage.setItem('dates', JSON.stringify(arr))
-      setDates(arr)
-    }
-  }
-
-  function addType() {
-    if (localStorage.getItem('types') === null) {
-      const arr = []
-      arr.push(itemType)
-      localStorage.setItem('types', JSON.stringify(arr))
-      setTypes(arr)
-    } else {
-      const arr = JSON.parse(localStorage.getItem('types'));
-      arr.push(itemType)
-      localStorage.setItem('types', JSON.stringify(arr))
-      setTypes(arr)
-    }
-  }
-
-  function addWork() {
-    if (localStorage.getItem('works') === null) {
-      const arr = [];
-      arr.push(title)
+      arr.push({
+        id: arr.length,
+        date: date,
+        type: itemType,
+        title: title
+      })
       localStorage.setItem('works', JSON.stringify(arr))
-      setWorks(arr)
-    } else {
-      const arr = JSON.parse(localStorage.getItem('works'));
-      // console.log(arr);
-      arr.push(title)
-      localStorage.setItem('works', JSON.stringify(arr))
-      setWorks(arr)
     }
+    setWorks(arr);
   }
-
-  function add() {
-    addWork();
-    addDate();
-    addType();
-    // document.location.reload()
-  }
-
+  
   function handleDelete(key) {
     var arr = JSON.parse(localStorage.getItem('works'))
-    arr.splice(key, 1);
+    // console.log(key)
+    arr = arr.filter(item => item.id !== key)
     localStorage.setItem('works', JSON.stringify(arr))
-    setWorks(arr);
-    
-    arr = JSON.parse(localStorage.getItem('dates'))
-    arr.splice(key, 1);
-    localStorage.setItem('dates', JSON.stringify(arr))
-    setDates(arr)
-    
-    arr = JSON.parse(localStorage.getItem('types'))
-    arr.splice(key, 1);
-    localStorage.setItem('types', JSON.stringify(arr))
-    setTypes(arr)
-    // document.location.reload();
-    // console.log(arr);
+    setWorks(arr)
   }
 
   function handleTitleChange(event) {
@@ -110,9 +72,9 @@ export default function App() {
           </div> */}
 
         <div className="works">
-        {works.map((work, index) => {
+        {works.map((work) => {
           return (
-            < ToDoItem item={work} itemType={types[index]} key={index} dataKey={index} date={dates[index]} handleDelete={handleDelete}/>
+            < ToDoItem item={work.title} itemType={work.type} key={work.id} dataKey={work.id} date={work.date} handleDelete={handleDelete} setWorks={setWorks}/>
           )
         })}
         </div>
@@ -123,12 +85,22 @@ export default function App() {
         <Modal isOpen={isAddOpen} toggle={() => setAddOpen(!isAddOpen)}>
             <ModalHeader toggle={() => setAddOpen(!isAddOpen)}>Add new task</ModalHeader>
             <ModalBody>
-              <Input type="text" required placeholder="Task title" onChange={handleTitleChange}/>
-              <Input type="text" required placeholder="Task type" onChange={handleTypeChange}/>
+              <Input type="text" required placeholder="title" onChange={handleTitleChange}/>
+              <Input type="select" required 
+              onChange={handleTypeChange}>
+                <option>-- type --</option>
+                <option>important</option>
+                <option>very important</option>
+                <option>routine</option>
+                <option>work</option>
+                <option>family</option>
+                <option>friends</option>
+                <option>leisure</option>
+              </Input>
               <Input type="date" required onChange={handleDateChange}/>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={() => {setAddOpen(!isAddOpen); add()}}>ok</Button>
+              <Button color="primary" onClick={() => {setAddOpen(!isAddOpen); addItem()}}>ok</Button>
               <Button color="secondary" onClick={() => setAddOpen(!isAddOpen)}>Cancel</Button>
             </ModalFooter>
           </Modal>

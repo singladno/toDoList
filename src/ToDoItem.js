@@ -1,13 +1,26 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Button } from 'reactstrap'
-import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'reactstrap'
 import moment from "moment"
 import { MDBIcon } from 'mdbreact'
 import { Tooltip } from 'reactstrap'
 
 export default function ToDoItem(props) {
+	const [isSoon, setIsSoon] = useState(false);
+	const [isExpired, setIsExpired] = useState(false);
 	const [check, setCheck] = useState(false);
-	// console.log(now)
+	
+	useEffect(() => {
+		if (moment().isAfter(props.date, 'day')) {
+			setIsExpired(true)
+		}
+		if (moment().add(1, 'days').isSame(props.date, 'day')) {
+			setIsSoon(true)
+		}
+		console.log(`${props.item} isExpired: ${isExpired}`)
+		console.log(`${props.item} isSoon: ${isSoon}`)
+	})
+
 	function 	handleCheck() {
 		setCheck(!check)
 	}
@@ -19,31 +32,46 @@ export default function ToDoItem(props) {
 	const [date, setDate] = useState(props.date);
 
 	function handleDateSubmit() {
-		var arr = JSON.parse(localStorage.getItem('dates'))
-		arr[props.dataKey] = date;
-		localStorage.setItem('dates', JSON.stringify(arr))
-		document.location.reload();
+		var arr = JSON.parse(localStorage.getItem('works'))
+		arr.map(item => {
+			if (item.id === props.dataKey) {
+				item.date = date
+			}
+		})
+		localStorage.setItem('works', JSON.stringify(arr))
+		props.setWorks(arr)
 	}
 
 	function handleDateChange(event) {
 		var now = moment(event.target.value, "YYYY-MM-DD").format("D MMM YYYY")
+		var arr = JSON.parse(localStorage.getItem('works'))
 		setDate(now)
+		// window.location.reload()
 		// console.log(date)
 	}
 
 	function	handleChange(event) {
 		var arr = []
 		arr = JSON.parse(localStorage.getItem('works'));
+		// console.log(arr)
+		arr.forEach(item => {
+			if (item.id === props.dataKey) {
+				item.title = event.target.value
+			}
+		});
 		setTitle(event.target.value)
-		arr[props.dataKey] = event.target.value;
 		localStorage.setItem('works', JSON.stringify(arr))
 	}
 
 	function	handleTypeChange(event) {
 		var arr = []
-		arr = JSON.parse(localStorage.getItem('types'))
-		arr[props.dataKey] = event.target.value
-		localStorage.setItem('types', JSON.stringify(arr))
+		arr = JSON.parse(localStorage.getItem('works'))
+		arr.forEach(item => {
+			if (item.id === props.dataKey) {
+				item.type = event.target.value
+			}
+		});
+		localStorage.setItem('works', JSON.stringify(arr))
 		setItemType(event.target.value)
 	}
 
@@ -98,13 +126,22 @@ export default function ToDoItem(props) {
 			</div>
 
 			<div className="itemType">
-				<input
+				<Input
+				type="select"
 				className="itemType"
-				type="text"
 				value={itemType}
 				onChange={handleTypeChange}
 				>
-				</input>
+				
+				<option>choose type</option>
+				<option>important</option>
+                <option>very important</option>
+                <option>routine</option>
+                <option>work</option>
+                <option>family</option>
+                <option>friends</option>
+                <option>leisure</option>
+				</Input>
 			</div>
 
 		</div>
