@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ToDoItem from './ToDoItem'
-import moment from 'moment'
+import moment, { max } from 'moment'
 import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader, Form } from 'reactstrap'
 import { tsPropertySignature } from '@babel/types'
 
@@ -13,27 +13,28 @@ export default function App() {
   const [works, setWorks] = useState(JSON.parse(localStorage.getItem('works')) || []);
   // console.log(works);
 
+  function getMaxId(arr) {
+    var maxId = 0
+    arr.forEach(item => {
+      if (item.id > maxId) {
+        maxId = item.id
+      }
+    });
+    return maxId
+  }
+
   function addItem() {
     var arr = JSON.parse(localStorage.getItem('works'))
-    if (arr === null) {
-    arr = [
-      {
-        id: 0,
-        date: date,
-        type: itemType,
-        title: title
-      },
-    ]  
+    var id
+    id = getMaxId(arr) + 1
+    console.log(id)
+    arr.push({
+      id: id,
+      date: date,
+      type: itemType,
+      title: title
+    })
     localStorage.setItem('works', JSON.stringify(arr))
-    } else {
-      arr.push({
-        id: arr.length,
-        date: date,
-        type: itemType,
-        title: title
-      })
-      localStorage.setItem('works', JSON.stringify(arr))
-    }
     setWorks(arr);
   }
   
