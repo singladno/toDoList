@@ -13,13 +13,21 @@ export default function ToDoItem(props) {
 
 
 	useEffect(() => {
-		if (moment().isAfter(props.date, 'day')) {
-			setIsExpired(true);
-			setTodoStyle('isExpired');
-		}
-		if (moment().add(1, 'days').isSame(props.date, 'day') && !isExpired) {
-			setIsSoon(true);
-			setTodoStyle('isSoon');
+		setIsSoon(false)
+		setIsExpired(false)
+		if (check) {
+			setTodoStyle('')
+		} else {
+			if (moment().isAfter(props.date, 'day')) {
+				setIsExpired(true);
+				setTodoStyle('isExpired');
+			}
+			else if (moment().add(1, 'days').isSame(props.date, 'day') && !isExpired) {
+				setIsSoon(true);
+				setTodoStyle('isSoon');
+			} else {
+				setTodoStyle('')
+			}
 		}
 		console.log(`${props.item} isExpired: ${isExpired}`)
 		console.log(`${props.item} isSoon: ${isSoon}`)
