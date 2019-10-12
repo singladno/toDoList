@@ -116,3 +116,13 @@ input {
 /* .itemType {
   background-color: #eed33b !important  
 } */
+
+.sort {
+  width: inherit;
+  position: relative; 
+  text-align: right;
+}
+
+.rotate {
+  transform: rotate(180deg)
+}

@@ -29,9 +29,6 @@ export default function ToDoItem(props) {
 				setTodoStyle('')
 			}
 		}
-		console.log(`${props.item} isExpired: ${isExpired}`)
-		console.log(`${props.item} isSoon: ${isSoon}`)
-		// props.setWorks();
 	});
 
 	function 	handleCheck() {
