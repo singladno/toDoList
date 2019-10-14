@@ -30,19 +30,22 @@ export default function Calendar() {
         setStartOfWeek(startOfWeek => {
           return moment(startOfWeek, "DD").subtract(1, 'week')
         })
+        setMonth(moment(startOfWeek, "DD").format("MMMM"))
     }
     
     function toggleWeekForward() {
         setStartOfWeek(startOfWeek => {
             return moment(startOfWeek, "DD").add(1, 'week')
           })
+          setMonth(moment(startOfWeek, "DD").format("MMMM"))
     }
 
+    const [month, setMonth] = useState()
     useEffect(() => {
-
         let today = moment().format("DD-MM-YYYY")
         if (document.getElementsByClassName(today).length) {
            today = moment(today, "DD MM YYYY").format("ddd")
+           setMonth(moment(startOfWeek, "DD").format("MMMM"))
            var th = document.querySelector(`th.${today}`)
            th.classList.add('current')
            return function() {
@@ -87,6 +90,7 @@ export default function Calendar() {
                 <Button onClick={toggleWeekBack} style={{marginRight:'10px'}}color="link" size="lg"><IoIosArrowBack/></Button>
                 <Button onClick={toggleWeekForward} color="link" size="lg"><IoIosArrowForward/></Button>
             </div>
+            <div className="month">{month}</div>
             <Table className="table" bordered>
                 <thead>
                     <tr className="weekDays">
