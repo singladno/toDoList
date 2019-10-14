@@ -10,6 +10,7 @@ export default function ToDoItem(props) {
 	const [isExpired, setIsExpired] = useState(false);
 	const [check, setCheck] = useState(false);
 	const [todoStyle, setTodoStyle] = useState('');
+	const [time, setTime] = useState()
 
 
 	useEffect(() => {
@@ -46,12 +47,13 @@ export default function ToDoItem(props) {
 		arr.map(item => {
 			if (item.id === props.dataKey) {
 				item.date = date
+				item.time = time
 			}
 		})
 		localStorage.setItem('works', JSON.stringify(arr))
 		props.setWorks(arr)
 	}
-
+	
 	function handleDateChange(event) {
 		var now = moment(event.target.value, "YYYY-MM-DD").format("D MMM YYYY")
 		// var arr = JSON.parse(localStorage.getItem('works'))
@@ -59,7 +61,7 @@ export default function ToDoItem(props) {
 		// window.location.reload()
 		// console.log(date)
 	}
-
+	
 	function	handleChange(event) {
 		var arr = []
 		arr = JSON.parse(localStorage.getItem('works'));
@@ -72,7 +74,7 @@ export default function ToDoItem(props) {
 		setTitle(event.target.value)
 		localStorage.setItem('works', JSON.stringify(arr))
 	}
-
+	
 	function	handleTypeChange(event) {
 		var arr = []
 		arr = JSON.parse(localStorage.getItem('works'))
@@ -83,6 +85,11 @@ export default function ToDoItem(props) {
 		});
 		localStorage.setItem('works', JSON.stringify(arr))
 		setItemType(event.target.value)
+	}
+	
+	function handleTimeChange(event) {
+		setTime(event.target.value)
+		// console.log(event.target.value)
 	}
 
 	return(
@@ -120,6 +127,7 @@ export default function ToDoItem(props) {
 							<form>
 								<ModalBody>
 										<input onChange={handleDateChange} type="date" id="modalDate" className="container-fluid"></input>
+										<input  onChange={handleTimeChange} type="time" className="container-fluid"></input>
 								</ModalBody>
 								<ModalFooter>
 									<Button color="primary" onClick={() => { setModalOpen(!isModalOpen); handleDateSubmit()}}>Ok</Button>

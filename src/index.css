@@ -126,3 +126,12 @@ input {
 .rotate {
   transform: rotate(180deg)
 }
+
+.cell {
+  /* display: flex; */
+  background: green;
+  text-align: center;
+  font-size: 70%;
+  margin: auto;
+  /* text-align: center !important; */
+}

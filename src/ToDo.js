@@ -27,6 +27,7 @@ export default function ToDo() {
   const [rotate, setRotate] = useState('')
   const [showTypeArrow, setShowTypeArrow] = useState(false)
   const [showDateArrow, setShowDateArrow] = useState(false)
+  const [time, setTime] = useState();
   // console.log(works);
 
   function getMaxId(arr) {
@@ -43,12 +44,12 @@ export default function ToDo() {
     var arr = JSON.parse(localStorage.getItem('works'))
     var id
     id = getMaxId(arr) + 1
-    console.log(id)
     arr.push({
       id: id,
       date: date,
       type: itemType,
-      title: title
+      title: title,
+      time: time || "15:00"
     })
     localStorage.setItem('works', JSON.stringify(arr))
     setWorks(arr);
@@ -69,11 +70,15 @@ export default function ToDo() {
   function handleTypeChange(event) {
     setItemType(event.target.value);
   }
-
+  
   function handleDateChange(event) {
     var now = moment(event.target.value, "YYYY-MM-DD").format("D MMM YYYY");
     setDate(now);
     // console.log(now)
+  }
+  
+  function handleTimeChange(event) {
+    setTime(event.target.value)
   }
 
   function sortByDate() {
@@ -203,6 +208,7 @@ export default function ToDo() {
                 <option>leisure</option>
               </Input>
               <Input type="date" required onChange={handleDateChange}/>
+              <Input type="time" onChange={handleTimeChange}/>
             </ModalBody>
             <ModalFooter>
               <Button color="primary" onClick={() => {setAddOpen(!isAddOpen); addItem()}}>ok</Button>
