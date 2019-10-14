@@ -146,3 +146,37 @@ th.current > span.num {
   text-align: center;
   margin: 10px;
 }
+
+.important {
+  background-color: rgba(255, 0, 0, 0.534);
+}
+
+.veryimportant {
+ background-color: rgb(255, 123, 0);
+}
+
+.routine {
+  background-color: #858282;
+  color: rgb(92, 252, 92)
+  
+}
+
+.work {
+  background-color: #632222;
+  
+}
+
+.family {
+  background-color: #8a77c0;
+  
+}
+
+.friends {
+  background-color: #51cbdbcc;
+  
+}
+
+.leisure {
+  background-color: #8b55be;
+
+}
