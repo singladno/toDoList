@@ -129,9 +129,20 @@ input {
 
 .cell {
   /* display: flex; */
-  background: green;
+  /* background: green; */
   text-align: center;
   font-size: 70%;
   margin: auto;
   /* text-align: center !important; */
+}
+
+th.current > span.num {
+  padding: 5px;
+  border-radius: 100%;
+  background-color: greenyellow;
+}
+
+.toggleWeek {
+  text-align: center;
+  margin: 10px;
 }
