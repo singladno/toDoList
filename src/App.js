@@ -26,7 +26,7 @@ export default function App() {
                 </div>
             </div>
 
-            <div>
+            <div className="container">
                 {view}
             </div>
 

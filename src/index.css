@@ -184,3 +184,30 @@ th.current > span.num {
 .month {
   font-size: 50px;
 }
+
+.toggleCalendarView {
+  text-align: center;
+}
+
+.tdMonth {
+  /* width: 300%; */
+  padding: 1%;
+  height: 100px;
+}
+
+.cellMonth {
+  position: relative !important;
+  right: 0px !important;
+  text-align: right;
+  top: 0 !important;
+  font-size: 10px;
+}
+
+.workCell {
+  padding: 10%;
+  margin: auto  ;
+}
+
+.weekDaysMonth {
+  text-align: right;
+}
