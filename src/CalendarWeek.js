@@ -20,7 +20,7 @@ for (var i = 0; i < 24; i++) {
 
 export default function CalendarWeek() {
     const [startOfWeek, setStartOfWeek] = useState(moment().startOf('week').add(1, 'days').format('DD'))
-
+    const inputRef = useRef()
     function toggleWeekBack() {
         setStartOfWeek(startOfWeek => {
           return moment(startOfWeek, "DD").subtract(1, 'week')
@@ -73,7 +73,7 @@ export default function CalendarWeek() {
             if (el.length) {
                 el[0].innerHTML = item.title
                 el[0].classList.add(item.type.replace(' ', ""))
-                console.log(el)
+                // console.log(el)
                 // let thDay = document.querySelector(`th.${today}`)
                 // thDay.classList.add("current")
             }
@@ -82,7 +82,6 @@ export default function CalendarWeek() {
 
     return (
         <div className="CalendarWeek">
-            
             <div className="toggleWeek">
                 <Button onClick={toggleWeekBack} style={{marginRight:'10px'}}color="link" size="lg"><IoIosArrowBack/></Button>
                 <Button onClick={toggleWeekForward} color="link" size="lg"><IoIosArrowForward/></Button>

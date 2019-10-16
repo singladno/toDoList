@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, createRef, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
 import { Table } from 'reactstrap'
 
+const tdRefs = []
 
 export function CalendarCell(props) {
-    const calendarCellRef = useRef(moment(props.daysArr).add(props.i, 'day').format('DD-MM-YYYY'));
+    var newRef = useRef()
+    tdRefs.push(newRef)
+    var cell = moment(props.daysArr).add(props.i, 'day').format('DD-MM-YYYY');
     return (
         <td className="table-bordered tdMonth">
             <div className="cellMonth">{moment(props.daysArr).add(props.i, 'day').format('D')}</div>
-            <div ref={calendarCellRef} className={`workCell ${moment(props.daysArr).add(props.i, 'day').format('DD-MM-YYYY')}`}></div>
+            <div ref={newRef} className={`workCell ${cell}`}></div>
         </td>
     )
 }
@@ -18,7 +21,7 @@ export function CalendarMonthWeek(props) {
     const monthWeek = []
 
     for (let i = 0; i < 7; i++) {
-        monthWeek.push(< CalendarCell i={i} daysArr={props.daysArr} />)
+        monthWeek.push(< CalendarCell key={i} i={i} daysArr={props.daysArr} />)
     }
     return (
         <tr>
@@ -32,7 +35,7 @@ export function CalendarMonthData(props) {
     const monthData = []
     for (let i = 0; i < 5; i++) {
         monthData.push(
-            < CalendarMonthWeek daysArr={props.daysArr[i * 7]} />
+            < CalendarMonthWeek key={i} daysArr={props.daysArr[i * 7]} />
         )
     }
     return (
@@ -55,23 +58,19 @@ export default function CalendarMonth() {
 
 
     useEffect(() => {
+        handleRefs()
+    }, [month])
+
+    function handleRefs() {
         var arr = []
         arr = JSON.parse(localStorage.getItem('works'))
         for (var key in arr) {
             var date = moment(arr[key].date).format("DD-MM-YYYY")
-            // var el = document.getElementsByClassName(`workCell ${date}`)
-            // var el = document.querySelectorAll("div.workCell")
-
-            // var el = ReactDOM.findDOMNode(date.toString())
-
-            // console.log(el)
-            // if (el.length) {
-            //     el.innerHTML = "a"
-            //     console.log(el)
-            // }
+            for (var td in tdRefs) {
+                console.log(tdRefs[td])
+            }
         }
-    }, [month])
-
+    }
 
     function getDaysArr() {
         let arr = []
@@ -83,6 +82,7 @@ export default function CalendarMonth() {
 
     return (
         <div className="calendarMonth container">
+            {/* <button onClick={handleRefs}>show</button> */}
             <Table className="calendarMonthTable">
                 <thead>
                     <tr className="weekDaysMonth">
