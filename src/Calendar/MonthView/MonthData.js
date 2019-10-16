@@ -3,16 +3,25 @@ import ReactDOM from 'react-dom'
 import moment from 'moment'
 import { Table } from 'reactstrap'
 
-const tdRefs = []
-
+// const tdRefs = []
+var data = []
 export function CalendarCell(props) {
-    var newRef = useRef()
-    tdRefs.push(newRef)
+
+    var works = JSON.parse(localStorage.getItem('works'))
+    var text 
+    var style
+    // console.log(moment(props.daysArr).add(props.i, 'day'))
+    works.forEach(work => {
+        if (moment(work.date).format('DD-MM-YYYY') === moment(props.daysArr).add(props.i, 'day').format('DD-MM-YYYY')) {
+            text = work.title
+            style = work.type
+        }
+    });
     var cell = moment(props.daysArr).add(props.i, 'day').format('DD-MM-YYYY');
     return (
         <td className="table-bordered tdMonth">
             <div className="cellMonth">{moment(props.daysArr).add(props.i, 'day').format('D')}</div>
-            <div ref={newRef} className={`workCell ${cell}`}></div>
+            <div className={`workCell ${cell} ${style}`}>{text}</div>
         </td>
     )
 }
@@ -45,7 +54,7 @@ export function CalendarMonthData(props) {
     )
 }
 
-export default function CalendarMonth() {
+export default function MonthData() {
     const daysOfWeek = moment.weekdaysShort()
     const startOfMonth = moment().startOf('month').startOf('week').add(1, 'day')
     const [month, setMonth] = useState()
@@ -57,20 +66,20 @@ export default function CalendarMonth() {
     }, [month])
 
 
-    useEffect(() => {
-        handleRefs()
-    }, [month])
+    // useEffect(() => {
+    //     handleRefs()
+    // }, [month])
 
-    function handleRefs() {
-        var arr = []
-        arr = JSON.parse(localStorage.getItem('works'))
-        for (var key in arr) {
-            var date = moment(arr[key].date).format("DD-MM-YYYY")
-            for (var td in tdRefs) {
-                console.log(tdRefs[td])
-            }
-        }
-    }
+    // function handleRefs() {
+    //     var arr = []
+    //     arr = JSON.parse(localStorage.getItem('works'))
+    //     for (var key in arr) {
+    //         var date = moment(arr[key].date).format("DD-MM-YYYY")
+    //         for (var td in tdRefs) {
+    //             console.log(tdRefs[td])
+    //         }
+    //     }
+    // }
 
     function getDaysArr() {
         let arr = []
@@ -80,7 +89,8 @@ export default function CalendarMonth() {
         setDaysArr(arr)
     }
 
-    return (
+    data = []
+    data.push(
         <div className="calendarMonth container">
             {/* <button onClick={handleRefs}>show</button> */}
             <Table className="calendarMonthTable">
@@ -102,4 +112,5 @@ export default function CalendarMonth() {
             </Table>
         </div>
     )
+    return data
 }

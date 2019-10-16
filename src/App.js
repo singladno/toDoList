@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ToDo from './ToDo'
 import { Button } from 'reactstrap'
-import Calendar from "./Calendar"
+import Calendar from "./Calendar/Calendar"
 
 export default function App() {
     const [calendarView, setCalendarView] = useState(false)

@@ -211,3 +211,23 @@ th.current > span.num {
 .weekDaysMonth {
   text-align: right;
 }
+
+.date {
+  font-size: 30px;
+}
+
+div.time {
+  width: 5%;
+  display: inline;
+}
+
+div.hourWork {
+  width: 80%;
+  margin-left: 5px;
+  border-bottom: 1px solid rgba(197, 197, 197, 0.671);
+  display: inline-block;
+}
+
+.workItem {
+  margin-left: 200px;;
+}
