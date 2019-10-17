@@ -47,7 +47,9 @@ export default function ToDoItem(props) {
 		arr.map(item => {
 			if (item.id === props.dataKey) {
 				item.date = date
-				item.time = time
+				if (time !== undefined) {
+					item.time = time
+				}
 			}
 		})
 		localStorage.setItem('works', JSON.stringify(arr))
@@ -89,7 +91,7 @@ export default function ToDoItem(props) {
 	
 	function handleTimeChange(event) {
 		setTime(event.target.value)
-		// console.log(event.target.value)
+		console.log(event.target.value)
 	}
 
 	return(

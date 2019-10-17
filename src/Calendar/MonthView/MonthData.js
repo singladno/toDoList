@@ -2,15 +2,18 @@ import React, { useState, useEffect, createRef, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
 import { Table } from 'reactstrap'
+import { Button, ButtonGroup } from 'reactstrap'
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io"
 
-// const tdRefs = []
+
 var data = []
 export function CalendarCell(props) {
 
     var works = JSON.parse(localStorage.getItem('works'))
-    var text 
+    var text
     var style
-    // console.log(moment(props.daysArr).add(props.i, 'day'))
+
     works.forEach(work => {
         if (moment(work.date).format('DD-MM-YYYY') === moment(props.daysArr).add(props.i, 'day').format('DD-MM-YYYY')) {
             text = work.title
@@ -56,30 +59,14 @@ export function CalendarMonthData(props) {
 
 export default function MonthData() {
     const daysOfWeek = moment.weekdaysShort()
-    const startOfMonth = moment().startOf('month').startOf('week').add(1, 'day')
-    const [month, setMonth] = useState()
+    const [month, setMonth] = useState(moment().toString())
+    const startOfMonth = moment(month).startOf('month').startOf('week').add(1, 'day')
     const daysInMonth = moment(month).daysInMonth()
     const [daysArr, setDaysArr] = useState({})
 
     useEffect(() => {
         getDaysArr()
     }, [month])
-
-
-    // useEffect(() => {
-    //     handleRefs()
-    // }, [month])
-
-    // function handleRefs() {
-    //     var arr = []
-    //     arr = JSON.parse(localStorage.getItem('works'))
-    //     for (var key in arr) {
-    //         var date = moment(arr[key].date).format("DD-MM-YYYY")
-    //         for (var td in tdRefs) {
-    //             console.log(tdRefs[td])
-    //         }
-    //     }
-    // }
 
     function getDaysArr() {
         let arr = []
@@ -92,7 +79,13 @@ export default function MonthData() {
     data = []
     data.push(
         <div className="calendarMonth container">
-            {/* <button onClick={handleRefs}>show</button> */}
+            <div className="monthToggle">
+                <ButtonGroup>
+                    <Button color='link' onClick={() => setMonth(moment(month).subtract(1, 'month'))}><IoIosArrowBack /></Button>
+                    <span className="month">{moment(month).format('MMMM YYYY')}</span>
+                    <Button color='link' onClick={() => setMonth(moment(month).add(1, 'month'))}><IoIosArrowForward /></Button>
+                </ButtonGroup>
+            </div>
             <Table className="calendarMonthTable">
                 <thead>
                     <tr className="weekDaysMonth">

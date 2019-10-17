@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-// import ReactDOM from 'react-dom'
 import CalendarWeek from './WeekView/CalendarWeek'
 import { Button, ButtonGroup } from 'reactstrap'
 import CalendarMonth from './MonthView/CalendarMonth'

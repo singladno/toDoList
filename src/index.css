@@ -16,11 +16,6 @@ code {
   text-align: center;
 }
 
-/* .ToDo {
-  margin: auto;
-  background-color: antiquewhite;
-} */
-
 body {
   background-color: whitesmoke !important;
 }
@@ -52,14 +47,12 @@ body {
 input {
   font-weight: 100;
   font-size: 20px !important;
-  /* font-style: italic; */
 }
 .toDoItem {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   padding: 30px 20px 0;
-  /* width: 70%; */
   border-bottom: 1px solid #cecece;
   font-family: Roboto, sans-serif;
   font-weight: 100;
@@ -81,7 +74,6 @@ input {
   width: inherit;
   position: fixed;
   top: 0;
-  /* background:rgba(201, 24, 24, 0.4); */
 }
 
 .tabs {
@@ -113,10 +105,6 @@ input {
   background-color: rgba(255, 0, 0, 0.322)
 }
 
-/* .itemType {
-  background-color: #eed33b !important  
-} */
-
 .sort {
   width: inherit;
   position: relative; 
@@ -128,12 +116,9 @@ input {
 }
 
 .cell {
-  /* display: flex; */
-  /* background: green; */
   text-align: center;
   font-size: 70%;
   margin: auto;
-  /* text-align: center !important; */
 }
 
 th.current > span.num {

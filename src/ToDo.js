@@ -43,10 +43,16 @@ export default function ToDo() {
   function addItem() {
     var arr = JSON.parse(localStorage.getItem('works'))
     var id
+    var localDate
+    if (date === undefined) {
+      localDate = moment().format('D MMM YYYY')
+    } else {
+      localDate = date
+    }
     id = getMaxId(arr) + 1
     arr.push({
       id: id,
-      date: date,
+      date: localDate,
       type: itemType,
       title: title,
       time: time || "15:00"

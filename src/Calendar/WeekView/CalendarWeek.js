@@ -13,11 +13,6 @@ for (var i = 0; i < 24; i++) {
     hours[i] = `${i}:00`
 }
 
-
-// var td = document.querySelector('Mon 1:00')
-// console.log(td)
-// // td.innerHTML = 'aaa'
-
 export default function CalendarWeek() {
     const [startOfWeek, setStartOfWeek] = useState(moment().startOf('week').add(1, 'days').format('DD'))
     const inputRef = useRef()
@@ -56,7 +51,6 @@ export default function CalendarWeek() {
                 data[key].innerHTML = ''
             }
         }
-        // console.log(data[0].innerHTML = '')
     }
 
     useEffect(() => {
@@ -73,9 +67,6 @@ export default function CalendarWeek() {
             if (el.length) {
                 el[0].innerHTML = item.title
                 el[0].classList.add(item.type.replace(' ', ""))
-                // console.log(el)
-                // let thDay = document.querySelector(`th.${today}`)
-                // thDay.classList.add("current")
             }
         });
     })
